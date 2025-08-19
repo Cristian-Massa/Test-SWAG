@@ -47,9 +47,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Product Image */}
         <div className="product-image">
           {/* Bug: no real image handling */}
-          <div className="image-placeholder">
+          <img src={product.image} />
+          {/* <div className="image-placeholder">
             <span className="material-icons">image</span>
-          </div>
+          </div> */}
 
           {/* Status Badge */}
           <div className="product-status">{getStatusBadge}</div>

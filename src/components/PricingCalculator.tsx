@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Product } from "../types/Product";
 import "./PricingCalculator.css";
 import { Price } from "./Price";
+import { clampQuantity } from "../libs/validations/clampQuantity";
 
 interface PricingCalculatorProps {
   product: Product;
@@ -62,9 +63,10 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
             <input
               type="number"
               value={quantity}
-              onChange={(e) =>
-                setQuantity(Math.max(1, parseInt(e.target.value) || 1))
-              }
+              onChange={(e) => {
+                const value = parseInt(e.target.value, 10);
+                setQuantity(clampQuantity(value, 1, product.stock));
+              }}
               className="quantity-input p1"
               min="1"
               max="10000"
