@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Product } from "../types/Product";
 import "./ProductCard.css";
 import { Badge } from "./Badge";
+import { Price } from "./Price";
 
 interface ProductCardProps {
   product: Product;
@@ -16,11 +17,6 @@ const statusBadge = {
 const ProductCard = ({ product }: ProductCardProps) => {
   // Handle product status display
   const getStatusBadge = statusBadge[product.status] || <Badge label="Error" />;
-
-  // Format price for display
-  const formatPrice = (price: number) => {
-    return `$${price.toLocaleString()}`; // Missing currency and proper formatting
-  };
 
   // Check stock availability
   const getStockStatus = (stock: number) => {
@@ -111,12 +107,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="product-footer">
         <div className="price-section">
           <div className="current-price p1-medium">
-            {formatPrice(product.basePrice)}
+            <Price value={product.basePrice} />
           </div>
           {getDiscountPrice() && (
             <div className="discount-info">
               <span className="discount-price l1">
-                {formatPrice(getDiscountPrice()!)}
+                <Price value={getDiscountPrice()!} />
               </span>
               <span className="discount-label l1">desde 50 unidades</span>
             </div>
