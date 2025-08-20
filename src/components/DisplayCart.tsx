@@ -21,12 +21,20 @@ export const DisplayCart = () => {
       ></div>
       <div className={`cart ${show ? "" : "closed"}`}>
         <h3>Carrito</h3>
-        {cart.map((item, index) => (
-          <CartItem key={index} item={item} />
-        ))}
-        {cart.length === 0 && (
-          <p className="empty-cart">El carrito está vacío</p>
-        )}
+        <div className="products">
+          {cart.map((item, index) => (
+            <CartItem key={index} item={item} />
+          ))}
+          {cart.length === 0 && (
+            <p className="empty-cart">El carrito está vacío</p>
+          )}
+        </div>
+        <div className="cart-actions">
+          <button className="btn btn-secondary cta1">
+            <span className="material-icons">send</span>
+            Pagar
+          </button>
+        </div>
       </div>
     </>
   );
