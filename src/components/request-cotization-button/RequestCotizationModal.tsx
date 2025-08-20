@@ -5,6 +5,7 @@ import "./RequestCotizationModal.css";
 import { PrintButton } from "../PrintButton";
 import { getDiscount } from "../../libs/calculateDiscount";
 import { calculatePrice } from "../../libs/calculatePrice";
+import { useToast } from "../../context/ToastContext";
 
 interface RequestCotizationModalProps {
   open: boolean;
@@ -20,6 +21,7 @@ export const RequestCotizationModal = ({
   product,
 }: RequestCotizationModalProps) => {
   // Form state editable
+  const { addToast } = useToast();
   const [client, setClient] = useState({
     name: "",
     email: "",
@@ -41,7 +43,7 @@ export const RequestCotizationModal = ({
   };
 
   const handleRequest = () => {
-    console.log(`Cotización solicitada para ${quantity} de ${product.name}`);
+    addToast(`Se envio la cotización solicitada`, "success");
     handleClose();
   };
 
