@@ -5,6 +5,7 @@ import { Product } from "../types/Product";
 import PricingCalculator from "../components/PricingCalculator";
 import "./ProductDetail.css";
 import { clampQuantity } from "../libs/validations/clampQuantity";
+import { AddCartButton } from "../components/AddCartButton";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -205,18 +206,11 @@ const ProductDetail = () => {
               </div>
 
               <div className="action-buttons">
-                <button
-                  className={`btn btn-primary cta1 ${
-                    !canAddToCart ? "disabled" : ""
-                  }`}
-                  disabled={!canAddToCart}
-                  onClick={() =>
-                    alert("Función de agregar al carrito por implementar")
-                  }
-                >
-                  <span className="material-icons">shopping_cart</span>
-                  {canAddToCart ? "Agregar al carrito" : "No disponible"}
-                </button>
+                <AddCartButton
+                  product={product}
+                  canAddToCart={canAddToCart}
+                  quantity={quantity}
+                />
 
                 <button
                   className="btn btn-secondary cta1"

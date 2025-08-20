@@ -3,6 +3,7 @@ import { Product } from "../types/Product";
 import "./PricingCalculator.css";
 import { Price } from "./Price";
 import { clampQuantity } from "../libs/validations/clampQuantity";
+import { AddCartButton } from "./AddCartButton";
 
 interface PricingCalculatorProps {
   product: Product;
@@ -158,17 +159,11 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
             <span className="material-icons">email</span>
             Solicitar cotización oficial
           </button>
-
-          <button
-            className="btn btn-primary cta1"
-            onClick={() => {
-              // Add to cart functionality
-              alert("Función de agregar al carrito por implementar");
-            }}
-          >
-            <span className="material-icons">shopping_cart</span>
-            Agregar al carrito
-          </button>
+          <AddCartButton
+            product={product}
+            canAddToCart={true}
+            quantity={quantity}
+          />
         </div>
 
         {/* Additional Info */}

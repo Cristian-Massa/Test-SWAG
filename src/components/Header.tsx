@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom'
-import './Header.css'
+import { Link } from "react-router-dom";
+import "./Header.css";
+import { DisplayCart } from "./DisplayCart";
 
 const Header = () => {
   return (
@@ -20,10 +21,7 @@ const Header = () => {
               <span className="material-icons">home</span>
               Catálogo
             </Link>
-            <button className="nav-link l1" onClick={() => alert('Función de carrito por implementar')}>
-              <span className="material-icons">shopping_cart</span>
-              Carrito (0)
-            </button>
+            <DisplayCart />
           </nav>
 
           {/* Actions */}
@@ -36,7 +34,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
