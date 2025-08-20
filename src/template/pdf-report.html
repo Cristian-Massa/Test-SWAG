@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cotización</title>
+    <style>
+      @media print {
+        @media print {
+          @page {
+            size: A4;
+            margin: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body
+    style="
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    "
+  >
+    <div
+      style="
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 30px;
+          text-align: center;
+        "
+      >
+        <h1 style="margin: 0; font-size: 28px; font-weight: 600">COTIZACIÓN</h1>
+        <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9">
+          Propuesta comercial
+        </p>
+      </div>
+
+      <!-- Company Info -->
+      <div style="padding: 30px; border-bottom: 2px solid #f0f0f0">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+          "
+        >
+          <div>
+            <h2 style="margin: 0 0 10px 0; color: #667eea; font-size: 20px">
+              SWAG S.A.
+            </h2>
+            <p style="margin: 5px 0; color: #666; line-height: 1.5">
+              Dirección de la empresa<br />
+              Ciudad, Estado, CP<br />
+              Tel: (555) 123-4567<br />
+              Email: contacto@swag.com
+            </p>
+          </div>
+          <div style="text-align: right">
+            <p style="margin: 5px 0; color: #666">
+              <strong>Cotización #:</strong> COT-2024-001
+            </p>
+            <p style="margin: 5px 0; color: #666">
+              <strong>Fecha:</strong> 19 de Agosto, 2024
+            </p>
+            <p style="margin: 5px 0; color: #666">
+              <strong>Válida hasta:</strong> 19 de Septiembre, 2024
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Info -->
+      <div style="padding: 30px; border-bottom: 2px solid #f0f0f0">
+        <h3
+          style="
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+          "
+        >
+          Información del Cliente
+        </h3>
+        <div
+          style="
+            background-color: #f8f9ff;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+          "
+        >
+          <p style="margin: 8px 0; font-size: 16px">
+            <strong style="color: #667eea">Nombre:</strong>
+            <span id="cliente-nombre">{{ name }}</span>
+          </p>
+          <p style="margin: 8px 0; font-size: 16px">
+            <strong style="color: #667eea">Email:</strong>
+            <span id="cliente-email">{{ email }}</span>
+          </p>
+          <p style="margin: 8px 0; font-size: 16px">
+            <strong style="color: #667eea">Empresa:</strong>
+            <span id="cliente-empresa">{{ clientCompany }}</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Products Table -->
+      <div style="padding: 30px">
+        <h3
+          style="
+            margin: 0 0 20px 0;
+            color: #333;
+            font-size: 18px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+          "
+        >
+          Productos Cotizados
+        </h3>
+
+        <table
+          style="
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+          "
+        >
+          <thead>
+            <tr
+              style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+              "
+            >
+              <th style="padding: 15px; text-align: left; font-weight: 600">
+                Descripción
+              </th>
+              <th style="padding: 15px; text-align: center; font-weight: 600">
+                Cantidad
+              </th>
+              <th style="padding: 15px; text-align: right; font-weight: 600">
+                Precio Unit.
+              </th>
+              <th style="padding: 15px; text-align: right; font-weight: 600">
+                Descuento
+              </th>
+              <th style="padding: 15px; text-align: right; font-weight: 600">
+                Total
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #eee; background-color: #fff">
+              <td style="padding: 15px; border-right: 1px solid #f0f0f0">
+                <strong>{{ product }}</strong><br />
+                <small style="color: #666">{{ productDescription }}</small>
+              </td>
+              <td
+                style="
+                  padding: 15px;
+                  text-align: center;
+                  border-right: 1px solid #f0f0f0;
+                "
+              >
+                {{ quantity }}
+              </td>
+              <td
+                style="
+                  padding: 15px;
+                  text-align: center;
+                  border-right: 1px solid #f0f0f0;
+                "
+              >
+                {{ discount }}%
+              </td>
+              <td
+                style="
+                  padding: 15px;
+                  text-align: right;
+                  border-right: 1px solid #f0f0f0;
+                "
+              >
+                {{ price }}
+              </td>
+              <td
+                style="
+                  padding: 15px;
+                  text-align: right;
+                  font-weight: 600;
+                  color: #667eea;
+                "
+              >
+                {{ totalPrice }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Totals -->
+        <div style="margin-top: 30px; text-align: right">
+          <div
+            style="
+              display: inline-block;
+              background-color: #f8f9ff;
+              padding: 20px;
+              border-radius: 6px;
+              border: 2px solid #667eea;
+              min-width: 300px;
+            "
+          >
+            <div>
+              <span style="font-size: 20px; font-weight: 700; color: #667eea"
+                >TOTAL:</span
+              >
+              <span
+                style="
+                  font-size: 24px;
+                  font-weight: 700;
+                  color: #667eea;
+                  margin-left: 20px;
+                "
+                >{{ totalPrice }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div
+        style="
+          background-color: #667eea;
+          color: white;
+          padding: 20px;
+          text-align: center;
+        "
+      >
+        <p style="margin: 0; font-size: 14px">
+          ¡Gracias por considerar nuestros servicios!
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9">
+          Para cualquier duda, no dudes en contactarnos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Print Styles -->
+    <style media="print">
+      body {
+        background-color: white !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    </style>
+  </body>
+</html>

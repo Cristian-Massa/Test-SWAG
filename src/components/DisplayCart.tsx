@@ -13,13 +13,16 @@ export const DisplayCart = () => {
     <>
       <button className="nav-link l1" onClick={toggleCart}>
         <span className="material-icons">shopping_cart</span>
-        Carrito ({cart.length})
+        <p className="link-text">Carrito</p> ({cart.length})
       </button>
       <div
         onClick={toggleCart}
         className={`cart-bg ${show ? "" : "hidden"}`}
       ></div>
       <div className={`cart ${show ? "" : "closed"}`}>
+        <button className="close-button" onClick={toggleCart}>
+          <span> x</span>
+        </button>
         <h3>Carrito</h3>
         <div className="products">
           {cart.map((item, index) => (

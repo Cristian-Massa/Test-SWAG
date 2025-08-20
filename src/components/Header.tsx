@@ -19,7 +19,7 @@ const Header = () => {
           <nav className="nav">
             <Link to="/" className="nav-link l1">
               <span className="material-icons">home</span>
-              Catálogo
+              <p className="link-text">Catálogo</p>
             </Link>
             <DisplayCart />
           </nav>
@@ -28,7 +28,7 @@ const Header = () => {
           <div className="header-actions">
             <button className="btn btn-secondary cta1">
               <span className="material-icons">person</span>
-              Iniciar Sesión
+              <p className="link-text">Iniciar Sesión</p>
             </button>
           </div>
         </div>

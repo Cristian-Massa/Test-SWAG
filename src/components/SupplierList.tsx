@@ -1,5 +1,6 @@
 import { useFetch } from "../hooks/useFetch";
 import { suppliers as MockSuppliers } from "../data/products";
+import { useToast } from "../context/ToastContext";
 interface Supplier {
   id: string;
   name: string;
@@ -12,7 +13,6 @@ export default function SupplierList() {
     minDelay: 500,
     maxDelay: 1500,
   });
-
   return (
     <div className="filter-section">
       <h3 className="filter-title p1-medium">Proveedores</h3>

@@ -3,7 +3,7 @@
   background: #1a1a1a;
   color: white;
   padding: 16px 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -90,22 +90,17 @@
   .header-content {
     gap: 16px;
   }
-  
+
   .nav {
     gap: 16px;
   }
-  
+
   .nav-link {
     padding: 6px 12px;
   }
-  
-  .logo-text {
-    display: none;
-  }
-}
 
-@media (max-width: 480px) {
-  .nav {
+  .logo-text,
+  .link-text {
     display: none;
   }
 }

@@ -4,6 +4,7 @@ import { CartItem } from "../interfaces/cart";
 import { Product } from "../types/Product";
 import { getCart, saveCart } from "../libs/cart";
 import { clampQuantity } from "../libs/validations/clampQuantity";
+import { useToast } from "./ToastContext";
 
 interface CartContextType {
   cart: CartItem[];
@@ -18,7 +19,11 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const { addToast } = useToast();
 
+  function createToast(message: string) {
+    addToast(message, "success");
+  }
   useEffect(() => {
     setCart(getCart());
   }, []);
@@ -52,14 +57,21 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     syncCart(updated);
+    createToast(
+      `Producto ${product.name} ${
+        existing ? "actualizado" : "agregado"
+      } al carrito`
+    );
   };
   const removeFromCart = (productId: number) => {
     const updated = cart.filter((p) => p.id !== productId);
     syncCart(updated);
+    createToast("Producto eliminado del carrito");
   };
 
   const clearCart = () => {
     syncCart([]);
+    createToast("Carrito vaciado");
   };
 
   const incrementQuantity = (productId: number) => {

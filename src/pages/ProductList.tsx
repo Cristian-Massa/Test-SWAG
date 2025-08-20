@@ -14,7 +14,6 @@ const sortFunctions: Record<string, (products: Product[]) => Product[]> = {
 };
 
 const ProductList = () => {
-  console.log(allProducts);
   const [filteredProducts, setFilteredProducts] =
     useState<Product[]>(allProducts);
   const [selectedCategory, setSelectedCategory] = useState("all");

@@ -10,11 +10,6 @@ export const CartItem = ({ item }: CartItemProps) => {
   return (
     <div className="cart-item">
       <div>
-        <img
-          src={item.image}
-          alt={"item-image" + item.id}
-          className="item-image"
-        />
         <div>
           <span className="item-name">{item.name}</span>
           <div className="item-quantity-container">

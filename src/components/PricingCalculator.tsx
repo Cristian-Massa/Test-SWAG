@@ -4,6 +4,9 @@ import "./PricingCalculator.css";
 import { Price } from "./Price";
 import { clampQuantity } from "../libs/validations/clampQuantity";
 import { AddCartButton } from "./AddCartButton";
+import { RequestCotizationButton } from "./RequestCotizationButton";
+import { calculatePrice } from "../libs/calculatePrice";
+import { getDiscount } from "../libs/calculateDiscount";
 
 interface PricingCalculatorProps {
   product: Product;
@@ -13,39 +16,8 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedBreak, setSelectedBreak] = useState<number>(0);
 
-  // Calculate best pricing for quantity
-  const calculatePrice = (qty: number) => {
-    if (!product.priceBreaks || product.priceBreaks.length === 0) {
-      return product.basePrice * qty;
-    }
-
-    // Find applicable price break
-    let applicableBreak = product.priceBreaks[0];
-
-    for (let i = 0; i < product.priceBreaks.length; i++) {
-      if (qty >= product.priceBreaks[i].minQty) {
-        applicableBreak = product.priceBreaks[i];
-      }
-    }
-
-    return applicableBreak.price * qty;
-  };
-
-  // Calculate discount amount
-  const getDiscount = (qty: number) => {
-    if (!product.priceBreaks || product.priceBreaks.length === 0) {
-      return 0;
-    }
-
-    const baseTotal = product.basePrice * qty;
-    const discountedTotal = calculatePrice(qty);
-
-    // Calculate savings percentage
-    return ((baseTotal - discountedTotal) / baseTotal) * 100;
-  };
-
-  const currentPrice = calculatePrice(quantity);
-  const discountPercent = getDiscount(quantity);
+  const currentPrice = calculatePrice(quantity, product);
+  const discountPercent = getDiscount(quantity, product);
 
   return (
     <div className="pricing-calculator">
@@ -119,7 +91,7 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
           <div className="summary-row">
             <span className="summary-label p1">Precio unitario:</span>
             <span className="summary-value p1-medium">
-              <Price value={calculatePrice(quantity) / quantity} />{" "}
+              <Price value={calculatePrice(quantity, product) / quantity} />{" "}
             </span>
           </div>
 
@@ -147,18 +119,7 @@ const PricingCalculator = ({ product }: PricingCalculatorProps) => {
 
         {/* Actions */}
         <div className="calculator-actions">
-          <button
-            className="btn btn-secondary cta1"
-            onClick={() => {
-              // Handle quote request
-              alert(
-                `Cotización solicitada para ${quantity} unidades de ${product.name}`
-              );
-            }}
-          >
-            <span className="material-icons">email</span>
-            Solicitar cotización oficial
-          </button>
+          <RequestCotizationButton product={product} quantity={quantity} />
           <AddCartButton
             product={product}
             canAddToCart={true}
