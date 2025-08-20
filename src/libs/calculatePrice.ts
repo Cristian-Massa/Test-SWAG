@@ -13,6 +13,6 @@ export const calculatePrice = (qty: number, product: Product) => {
       applicableBreak = product.priceBreaks[i];
     }
   }
-
+  console.log(applicableBreak);
   return applicableBreak.price * qty;
 };

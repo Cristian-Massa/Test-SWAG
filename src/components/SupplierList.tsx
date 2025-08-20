@@ -1,6 +1,5 @@
 import { useFetch } from "../hooks/useFetch";
 import { suppliers as MockSuppliers } from "../data/products";
-import { useToast } from "../context/ToastContext";
 interface Supplier {
   id: string;
   name: string;

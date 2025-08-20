@@ -40,17 +40,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
     return null;
   };
-
   return (
     <div className="product-card">
       <Link to={`/product/${product.id}`} className="product-link">
         {/* Product Image */}
         <div className="product-image">
           {/* Bug: no real image handling */}
-          <img src={product.image} />
-          {/* <div className="image-placeholder">
-            <span className="material-icons">image</span>
-          </div> */}
+          {product.image ? (
+            <img src={product.image} />
+          ) : (
+            <div className="image-placeholder">
+              <span className="material-icons">image</span>
+            </div>
+          )}
 
           {/* Status Badge */}
           <div className="product-status">{getStatusBadge}</div>
