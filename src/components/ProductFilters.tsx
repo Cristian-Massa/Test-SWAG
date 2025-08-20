@@ -9,6 +9,9 @@ interface ProductFiltersProps {
   onCategoryChange: (category: string) => void;
   onSearchChange: (search: string) => void;
   onSortChange: (sort: string) => void;
+  onSupplierChange: (provider: string) => void;
+  priceRange: [number, number];
+  handlePriceRangeChange: (range: [number, number]) => void;
 }
 
 const ProductFilters = ({
@@ -18,6 +21,9 @@ const ProductFilters = ({
   onCategoryChange,
   onSearchChange,
   onSortChange,
+  onSupplierChange,
+  priceRange,
+  handlePriceRangeChange,
 }: ProductFiltersProps) => {
   return (
     <div className="product-filters">
@@ -43,7 +49,6 @@ const ProductFilters = ({
             )}
           </div>
         </div>
-
         {/* Category Filters */}
         <div className="filter-section">
           <h3 className="filter-title p1-medium">Categorías</h3>
@@ -63,7 +68,6 @@ const ProductFilters = ({
             ))}
           </div>
         </div>
-
         {/* Sort Options */}
         <div className="filter-section">
           <h3 className="filter-title p1-medium">Ordenar por</h3>
@@ -77,8 +81,50 @@ const ProductFilters = ({
             <option value="stock">Stock disponible</option>
           </select>
         </div>
-
-        {/* Quick Stats - Bug: hardcoded values instead of dynamic */}
+        <div className="filter-section">
+          <h3 className="filter-title p1-medium">Filtrar por</h3>
+          <div className="search-box">
+            <input
+              className="search-input p1"
+              placeholder="Proveedor"
+              onChange={(e) => onSupplierChange(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Rango de precios:</label>
+            <div className="flex gap-1">
+              <div className="search-box">
+                <input
+                  className="search-input p1"
+                  type="number"
+                  value={priceRange[0]}
+                  onChange={(e) =>
+                    handlePriceRangeChange([
+                      Number(e.target.value),
+                      priceRange[1],
+                    ])
+                  }
+                  placeholder="Min"
+                />
+              </div>
+              <div className="search-box">
+                <input
+                  className="search-input p1"
+                  type="number"
+                  value={priceRange[1]}
+                  onChange={(e) =>
+                    handlePriceRangeChange([
+                      priceRange[0],
+                      Number(e.target.value),
+                    ])
+                  }
+                  placeholder="Max"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Supplier List */}
         <SupplierList />
       </div>
     </div>

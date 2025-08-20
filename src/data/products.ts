@@ -396,37 +396,49 @@ export const categories: Category[] = [
     id: "all",
     name: "Todos",
     icon: "apps",
-    count: getProductsQuantity(products, "all"),
+    count: getProductsQuantity(products, "all", "cat"),
   },
   {
     id: "tech",
     name: "Tecnología",
     icon: "devices",
-    count: getProductsQuantity(products, "tech"),
+    count: getProductsQuantity(products, "tech", "cat"),
   },
   {
     id: "textile",
     name: "Textil",
     icon: "checkroom",
-    count: getProductsQuantity(products, "textile"),
+    count: getProductsQuantity(products, "textile", "cat"),
   },
   {
     id: "office",
     name: "Oficina",
     icon: "work",
-    count: getProductsQuantity(products, "office"),
+    count: getProductsQuantity(products, "office", "cat"),
   },
   {
     id: "home",
     name: "Hogar",
     icon: "home",
-    count: getProductsQuantity(products, "home"),
+    count: getProductsQuantity(products, "home", "cat"),
   },
 ];
 
 // Proveedores
 export const suppliers: Supplier[] = [
-  { id: "smart-gifts", name: "Smart Gifts", products: 12 },
-  { id: "top-gifts", name: "Top Gifts", products: 5 },
-  { id: "qr-code", name: "QR Code", products: 3 },
+  {
+    id: "smart-gifts",
+    name: "Smart Gifts",
+    products: getProductsQuantity(products, "smart-gifts", "supplier"),
+  },
+  {
+    id: "top-gifts",
+    name: "Top Gifts",
+    products: getProductsQuantity(products, "top-gifts", "supplier"),
+  },
+  {
+    id: "qr-code",
+    name: "QR Code",
+    products: getProductsQuantity(products, "qr-code", "supplier"),
+  },
 ];

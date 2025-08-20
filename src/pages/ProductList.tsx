@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import ProductFilters from "../components/ProductFilters";
 import { products as allProducts } from "../data/products";
@@ -12,51 +12,83 @@ const sortFunctions: Record<string, (products: Product[]) => Product[]> = {
     [...products].sort((a, b) => (a.basePrice || 0) - (b.basePrice || 0)),
   stock: (products) => [...products].sort((a, b) => b.stock - a.stock),
 };
+
 const ProductList = () => {
+  console.log(allProducts);
   const [filteredProducts, setFilteredProducts] =
     useState<Product[]>(allProducts);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("name");
+  const [supplier, setSupplier] = useState<string>("");
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    0,
+    filteredProducts.reduce(
+      (max, product) => Math.max(max, product.basePrice || 0),
+      1000
+    ),
+  ]);
 
-  // Filter and sort products based on criteria
-  const filterProducts = (category: string, search: string, sort: string) => {
+  // Filtrado y ordenamiento de productos
+  useEffect(() => {
     let filtered = [...allProducts];
 
-    // Category filter
-    if (category !== "all") {
-      filtered = filtered.filter((product) => product.category === category);
-    }
-
-    // Search filter
-    if (search) {
+    if (selectedCategory !== "all") {
       filtered = filtered.filter(
-        (product) =>
-          product.name.toLowerCase().includes(search) ||
-          product.sku.toLowerCase().includes(search)
+        (product) => product.category === selectedCategory
       );
     }
 
-    if (sort && sortFunctions[sort]) {
-      filtered = sortFunctions[sort](filtered);
+    if (searchQuery) {
+      const lowerSearch = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (product) =>
+          product.name.toLowerCase().includes(lowerSearch) ||
+          product.sku.toLowerCase().includes(lowerSearch)
+      );
+    }
+
+    if (supplier) {
+      filtered = filtered.filter((product) =>
+        product.supplier.toLowerCase().includes(supplier.toLowerCase())
+      );
+    }
+
+    // Filtrado por rango de precios
+    filtered = filtered.filter(
+      (product) =>
+        (product.basePrice || 0) >= priceRange[0] &&
+        (product.basePrice || 0) <= priceRange[1]
+    );
+
+    if (sortBy && sortFunctions[sortBy]) {
+      filtered = sortFunctions[sortBy](filtered);
     }
 
     setFilteredProducts(filtered);
-  };
+  }, [selectedCategory, searchQuery, sortBy, supplier, priceRange]);
 
-  const handleCategoryChange = (category: string) => {
+  // Handlers de filtros y búsqueda
+  const handleCategoryChange = (category: string) =>
     setSelectedCategory(category);
-    filterProducts(category, searchQuery, sortBy);
-  };
-
-  const handleSearchChange = (search: string) => {
-    setSearchQuery(search);
-    filterProducts(selectedCategory, search, sortBy);
-  };
-
-  const handleSortChange = (sort: string) => {
-    setSortBy(sort);
-    filterProducts(selectedCategory, searchQuery, sort);
+  const handleSupplierChange = (supplier: string) =>
+    setSupplier(supplier.toLowerCase().replaceAll(" ", "-"));
+  const handleSearchChange = (search: string) => setSearchQuery(search);
+  const handleSortChange = (sort: string) => setSortBy(sort);
+  const handlePriceRangeChange = (range: [number, number]) =>
+    setPriceRange(range);
+  const resetFilters = () => {
+    setSelectedCategory("all");
+    setSearchQuery("");
+    setSupplier("");
+    setPriceRange([
+      0,
+      allProducts.reduce(
+        (max, product) => Math.max(max, product.basePrice || 0),
+        1000
+      ),
+    ]);
+    setSortBy("name");
   };
 
   return (
@@ -85,7 +117,7 @@ const ProductList = () => {
           </div>
         </div>
 
-        {/* Filters */}
+        {/* Filtros */}
         <ProductFilters
           selectedCategory={selectedCategory}
           searchQuery={searchQuery}
@@ -93,9 +125,18 @@ const ProductList = () => {
           onCategoryChange={handleCategoryChange}
           onSearchChange={handleSearchChange}
           onSortChange={handleSortChange}
+          onSupplierChange={handleSupplierChange}
+          priceRange={priceRange}
+          handlePriceRangeChange={handlePriceRangeChange}
         />
 
-        {/* Products Grid */}
+        <div className="filters-actions">
+          <button className="btn btn-secondary" onClick={resetFilters}>
+            Limpiar todos los filtros
+          </button>
+        </div>
+
+        {/* Productos */}
         <div className="products-section">
           {filteredProducts.length === 0 ? (
             <div className="empty-state">
@@ -104,14 +145,7 @@ const ProductList = () => {
               <p className="p1">
                 No se encontraron productos que coincidan con tu búsqueda.
               </p>
-              <button
-                className="btn btn-primary cta1"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                  filterProducts("all", "", sortBy);
-                }}
-              >
+              <button className="btn btn-primary cta1" onClick={resetFilters}>
                 Ver todos los productos
               </button>
             </div>
