@@ -1,13 +1,14 @@
-import { categories, suppliers } from '../data/products'
-import './ProductFilters.css'
+import { categories } from "../data/products";
+import "./ProductFilters.css";
+import SupplierList from "./SupplierList";
 
 interface ProductFiltersProps {
-  selectedCategory: string
-  searchQuery: string
-  sortBy: string
-  onCategoryChange: (category: string) => void
-  onSearchChange: (search: string) => void
-  onSortChange: (sort: string) => void
+  selectedCategory: string;
+  searchQuery: string;
+  sortBy: string;
+  onCategoryChange: (category: string) => void;
+  onSearchChange: (search: string) => void;
+  onSortChange: (sort: string) => void;
 }
 
 const ProductFilters = ({
@@ -16,7 +17,7 @@ const ProductFilters = ({
   sortBy,
   onCategoryChange,
   onSearchChange,
-  onSortChange
+  onSortChange,
 }: ProductFiltersProps) => {
   return (
     <div className="product-filters">
@@ -33,9 +34,9 @@ const ProductFilters = ({
               className="search-input p1"
             />
             {searchQuery && (
-              <button 
+              <button
                 className="clear-search"
-                onClick={() => onSearchChange('')}
+                onClick={() => onSearchChange("")}
               >
                 <span className="material-icons">close</span>
               </button>
@@ -47,10 +48,12 @@ const ProductFilters = ({
         <div className="filter-section">
           <h3 className="filter-title p1-medium">Categorías</h3>
           <div className="category-filters">
-            {categories.map(category => (
+            {categories.map((category) => (
               <button
                 key={category.id}
-                className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
+                className={`category-btn ${
+                  selectedCategory === category.id ? "active" : ""
+                }`}
                 onClick={() => onCategoryChange(category.id)}
               >
                 <span className="material-icons">{category.icon}</span>
@@ -64,8 +67,8 @@ const ProductFilters = ({
         {/* Sort Options */}
         <div className="filter-section">
           <h3 className="filter-title p1-medium">Ordenar por</h3>
-          <select 
-            value={sortBy} 
+          <select
+            value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
             className="sort-select p1"
           >
@@ -76,20 +79,10 @@ const ProductFilters = ({
         </div>
 
         {/* Quick Stats - Bug: hardcoded values instead of dynamic */}
-        <div className="filter-section">
-          <h3 className="filter-title p1-medium">Proveedores</h3>
-          <div className="supplier-list">
-            {suppliers.map(supplier => (
-              <div key={supplier.id} className="supplier-item">
-                <span className="supplier-name l1">{supplier.name}</span>
-                <span className="supplier-count l1">{supplier.products}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SupplierList />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductFilters
+export default ProductFilters;
