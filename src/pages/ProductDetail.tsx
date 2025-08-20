@@ -6,6 +6,7 @@ import PricingCalculator from "../components/PricingCalculator";
 import "./ProductDetail.css";
 import { clampQuantity } from "../libs/validations/clampQuantity";
 import { AddCartButton } from "../components/AddCartButton";
+import { RequestCotizationButton } from "../components/RequestCotizationButton";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -212,13 +213,10 @@ const ProductDetail = () => {
                   quantity={quantity}
                 />
 
-                <button
-                  className="btn btn-secondary cta1"
-                  onClick={() => alert("Función de cotización por implementar")}
-                >
-                  <span className="material-icons">calculate</span>
-                  Solicitar cotización
-                </button>
+                <RequestCotizationButton
+                  product={product}
+                  quantity={quantity}
+                />
               </div>
             </div>
           </div>
